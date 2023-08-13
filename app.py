@@ -34,10 +34,13 @@ def battle():
     monster_hp = 5
 
     while player_hp > 0 and monster_hp > 0:
+        st.write("\n")
         st.write("A fierce monster stands before you:")
         draw_ascii_monster()
+        st.write("\n")
         st.write("Your hero:")
         draw_ascii_hero()
+        st.write("\n")
 
         action = st.selectbox(f"Round {player_hp + monster_hp}: Choose your action:", options=["Attack", "Defend"])
 
@@ -58,4 +61,3 @@ def battle():
 
 if __name__ == "__main__":
     battle()
-
