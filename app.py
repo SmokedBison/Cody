@@ -42,20 +42,21 @@ def battle():
     plt.axis('off')
 
     while player_hp > 0 and monster_hp > 0:
+        st.write(" " * 15 + " " * 10)  # Padding for ASCII alignment
         draw_ascii_monster()
         draw_ascii_hero()
+        st.write(" " * 15 + " " * 10)  # Padding for ASCII alignment
 
-        with st.form("action_form"):
-            action = st.selectbox("Choose your action:", options=["Attack", "Defend"])
-            submit_button = st.form_submit_button(label="Submit")
+        st.write("Choose your action:")
+        attack_button = st.button("Attack")
+        defend_button = st.button("Defend")
 
-        if submit_button:
-            if action == "Attack":
-                st.write("You attack the monster!")
-                monster_hp -= 3
-            elif action == "Defend":
-                st.write("You defend against the monster's attack!")
-                player_hp -= 1
+        if attack_button:
+            st.write("You attack the monster!")
+            monster_hp -= 3
+        elif defend_button:
+            st.write("You defend against the monster's attack!")
+            player_hp -= 1
 
         draw_hero(ax, hero_x)
         draw_monster(ax, monster_x)
