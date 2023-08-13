@@ -1,6 +1,4 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 
 def draw_ascii_hero():
     st.write("""
@@ -21,55 +19,37 @@ def draw_ascii_monster():
       -_____-
     """)
 
-def draw_hero(ax, x):
-    hero_body = patches.Rectangle((x, 0), 1, 2, facecolor='blue')
-    ax.add_patch(hero_body)
-
-def draw_monster(ax, x):
-    monster_body = patches.Circle((x, 1), 0.5, facecolor='red')
-    ax.add_patch(monster_body)
+def draw_health_bar(health):
+    bar = "["
+    for _ in range(health):
+        bar += "#"
+    for _ in range(10 - health):
+        bar += " "
+    bar += "]"
+    return bar
 
 def battle():
     st.title("Battle Begins! A Fierce Monster Approaches...")
     player_hp = 10
     monster_hp = 5
-    hero_x = 1
-    monster_x = 8
-
-    fig, ax = plt.subplots(figsize=(8, 4))
-    plt.xlim(0, 10)
-    plt.ylim(0, 3)
-    plt.axis('off')
 
     while player_hp > 0 and monster_hp > 0:
-        st.write(" " * 15 + " " * 10)  # Padding for ASCII alignment
+        st.write("A fierce monster stands before you:")
         draw_ascii_monster()
+        st.write("Your hero:")
         draw_ascii_hero()
-        st.write(" " * 15 + " " * 10)  # Padding for ASCII alignment
 
-        st.write("Choose your action:")
-        attack_button = st.button("Attack")
-        defend_button = st.button("Defend")
+        action = st.selectbox("Choose your action:", options=["Attack", "Defend"])
 
-        if attack_button:
+        if action == "Attack":
             st.write("You attack the monster!")
             monster_hp -= 3
-        elif defend_button:
+        elif action == "Defend":
             st.write("You defend against the monster's attack!")
             player_hp -= 1
 
-        draw_hero(ax, hero_x)
-        draw_monster(ax, monster_x)
-        st.pyplot(fig)
-        plt.clf()
-        ax.clear()
-        plt.xlim(0, 10)
-        plt.ylim(0, 3)
-        plt.axis('off')
-        hero_x += 0.1
-        monster_x -= 0.1
-
-        st.write(f"Player HP: {player_hp} | Monster HP: {monster_hp}")
+        st.write("Monster HP:", draw_health_bar(monster_hp))
+        st.write("Player HP:", draw_health_bar(player_hp))
 
     if player_hp > 0:
         st.success('Cody Sewell: Battle Won!')
