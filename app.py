@@ -39,7 +39,7 @@ def battle():
         st.write("Your hero:")
         draw_ascii_hero()
 
-        action = st.selectbox("Choose your action:", options=["Attack", "Defend"])
+        action = st.selectbox(f"Round {player_hp + monster_hp}: Choose your action:", options=["Attack", "Defend"])
 
         if action == "Attack":
             st.write("You attack the monster!")
@@ -58,3 +58,4 @@ def battle():
 
 if __name__ == "__main__":
     battle()
+
