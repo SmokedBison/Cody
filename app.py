@@ -1,7 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import time
 
 def draw_ascii_hero():
     st.write("""
@@ -45,14 +44,18 @@ def battle():
     while player_hp > 0 and monster_hp > 0:
         draw_ascii_monster()
         draw_ascii_hero()
-        action = st.selectbox("Choose your action:", options=["Attack", "Defend"])
-        
-        if action == "Attack":
-            st.write("You attack the monster!")
-            monster_hp -= 3
-        elif action == "Defend":
-            st.write("You defend against the monster's attack!")
-            player_hp -= 1
+
+        with st.form("action_form"):
+            action = st.selectbox("Choose your action:", options=["Attack", "Defend"])
+            submit_button = st.form_submit_button(label="Submit")
+
+        if submit_button:
+            if action == "Attack":
+                st.write("You attack the monster!")
+                monster_hp -= 3
+            elif action == "Defend":
+                st.write("You defend against the monster's attack!")
+                player_hp -= 1
 
         draw_hero(ax, hero_x)
         draw_monster(ax, monster_x)
